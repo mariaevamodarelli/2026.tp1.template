@@ -1,5 +1,9 @@
 package com.bibliotech.service;
 
+import com.bibliotech.exception.BibliotecaException;
+import com.bibliotech.exception.LibroNoEncontradoException;
+import com.bibliotech.exception.LimitePrestamosException;
+import com.bibliotech.exception.SocioNoEncontradoException;
 import com.bibliotech.model.Libro;
 import com.bibliotech.model.Prestamo;
 import com.bibliotech.model.Socio;
@@ -25,18 +29,18 @@ public class PrestamoService {
         this.prestamoRepo = prestamoRepo;
     }
 
-    public void realizarPrestamo(String isbn, int socioId) {
+    public void realizarPrestamo(String isbn, int socioId) throws BibliotecaException {
 
         Libro libro = libroRepo.buscarPorId(isbn)
-                .orElseThrow(() -> new RuntimeException("Libro no encontrado"));
+                .orElseThrow(() -> new LibroNoEncontradoException("Libro no encontrado"));
 
         Socio socio = socioRepo.buscarPorId(socioId)
-                .orElseThrow(() -> new RuntimeException("Socio no encontrado"));
+                .orElseThrow(() -> new SocioNoEncontradoException("Socio no encontrado"));
 
         int prestamosActuales = prestamoRepo.buscarPorSocioId(socioId).size();
 
         if (prestamosActuales >= socio.getLimitePrestamos()) {
-            throw new RuntimeException("Límite de préstamos alcanzado");
+            throw new LimitePrestamosException("Límite de préstamos alcanzado");
         }
 
         Prestamo prestamo = new Prestamo(
