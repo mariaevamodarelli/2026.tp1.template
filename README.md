@@ -6,10 +6,10 @@
 ### Datos del Alumno
 
 | Campo | Respuesta |
-| :--- | :--- |
-| **Nombre** | |
-| **Apellido** | |
-| **Legajo** | |
+| :--- |:----------|
+| **Nombre** | Maria Eva |
+| **Apellido** | Modarelli |
+| **Legajo** | 63321     |
 
 > **Fecha de entrega:** 28 de Abril de 2026
 
