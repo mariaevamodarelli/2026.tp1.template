@@ -13,6 +13,7 @@ import com.bibliotech.repository.SocioRepository;
 
 import java.time.LocalDate;
 
+
 public class PrestamoService {
 
     private final LibroRepository libroRepo;
@@ -53,6 +54,24 @@ public class PrestamoService {
         prestamoRepo.guardar(prestamo);
     }
 
+    public long devolverPrestamo(int prestamoId) throws BibliotecaException {
+
+        Prestamo prestamo = prestamoRepo.buscarPorId(prestamoId)
+                .orElseThrow(() -> new BibliotecaException("Préstamo no encontrado"));
+
+        LocalDate fechaDevolucion = LocalDate.now();
+        prestamo.registrarDevolucion(fechaDevolucion);
+
+        // Suponemos 7 días de préstamo permitido
+        long diasPrestamo = java.time.temporal.ChronoUnit.DAYS.between(
+                prestamo.getFechaPrestamo(),
+                fechaDevolucion
+        );
+
+        long diasRetraso = Math.max(0, diasPrestamo - 7);
+
+        return diasRetraso;
+    }
     private int generarId() {
         return prestamoRepo.buscarTodos().size() + 1;
     }
