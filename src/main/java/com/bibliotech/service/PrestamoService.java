@@ -14,6 +14,7 @@ import com.bibliotech.repository.SocioRepository;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import com.bibliotech.exception.LibroNoDisponibleException;
 
 public class PrestamoService {
 
@@ -44,7 +45,7 @@ public class PrestamoService {
                 .noneMatch(Prestamo::estaActivo);
 
         if (!estaDisponible) {
-            throw new BibliotecaException("El recurso con ISBN " + isbn + " no está disponible en este momento.");
+            throw new LibroNoDisponibleException("El recurso con ISBN " + isbn + " no está disponible en este momento.");
         }
 
         // Verificar que el socio no haya alcanzado su límite de préstamos activos
