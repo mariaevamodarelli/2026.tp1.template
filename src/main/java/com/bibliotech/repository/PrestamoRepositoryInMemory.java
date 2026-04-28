@@ -35,9 +35,9 @@ public class PrestamoRepositoryInMemory implements PrestamoRepository {
     }
 
     @Override
-    public List<Prestamo> buscarPorIsbnLibro(String isbn) {
+    public List<Prestamo> buscarPorIsbnRecurso(String isbn) {
         return prestamos.values().stream()
-                .filter(prestamo -> prestamo.getLibro().isbn().equals(isbn))
+                .filter(prestamo -> prestamo.getRecurso().isbn().equals(isbn))
                 .toList();
     }
 }
