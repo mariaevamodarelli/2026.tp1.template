@@ -2,7 +2,10 @@ package com.bibliotech.service;
 
 import com.bibliotech.exception.BibliotecaException;
 import com.bibliotech.exception.LibroNoEncontradoException;
+import com.bibliotech.model.Ebook;
 import com.bibliotech.model.Libro;
+import com.bibliotech.model.LibroFisico;
+import com.bibliotech.model.Recurso;
 import com.bibliotech.repository.LibroRepository;
 
 import java.util.List;
@@ -20,24 +23,34 @@ public class LibroService {
         libroRepo.guardar(libro);
     }
 
-    public Libro buscarPorIsbn(String isbn) throws BibliotecaException {
-        return libroRepo.buscarPorId(isbn)
-                .orElseThrow(() -> new LibroNoEncontradoException("Libro no encontrado"));
+    public void registrarLibroFisico(String isbn, String titulo, String autor, int anio, String categoria, String ubicacion) {
+        LibroFisico libro = new LibroFisico(isbn, titulo, autor, anio, categoria, ubicacion);
+        libroRepo.guardar(libro);
     }
 
-    public List<Libro> buscarPorTitulo(String titulo) {
+    public void registrarEbook(String isbn, String titulo, String autor, int anio, String categoria, String formato) {
+        Ebook ebook = new Ebook(isbn, titulo, autor, anio, categoria, formato);
+        libroRepo.guardar(ebook);
+    }
+
+    public Recurso buscarPorIsbn(String isbn) throws BibliotecaException {
+        return libroRepo.buscarPorId(isbn)
+                .orElseThrow(() -> new LibroNoEncontradoException("No se encontró ningún libro con ISBN: " + isbn));
+    }
+
+    public List<Recurso> buscarPorTitulo(String titulo) {
         return libroRepo.buscarPorTitulo(titulo);
     }
 
-    public List<Libro> buscarPorAutor(String autor) {
+    public List<Recurso> buscarPorAutor(String autor) {
         return libroRepo.buscarPorAutor(autor);
     }
 
-    public List<Libro> buscarPorCategoria(String categoria) {
+    public List<Recurso> buscarPorCategoria(String categoria) {
         return libroRepo.buscarPorCategoria(categoria);
     }
 
-    public List<Libro> listarLibros() {
+    public List<Recurso> listarRecursos() {
         return libroRepo.buscarTodos();
     }
 }

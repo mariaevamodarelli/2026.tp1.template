@@ -1,14 +1,14 @@
 package com.bibliotech.repository;
 
-import com.bibliotech.model.Libro;
+import com.bibliotech.model.Recurso;
 
 import java.util.List;
 
-public interface LibroRepository extends Repository<Libro, String> {
+public interface LibroRepository extends Repository<Recurso, String> {
 
-    List<Libro> buscarPorTitulo(String titulo);
+    List<Recurso> buscarPorTitulo(String titulo);
 
-    List<Libro> buscarPorAutor(String autor);
+    List<Recurso> buscarPorAutor(String autor);
 
-    List<Libro> buscarPorCategoria(String categoria);
+    List<Recurso> buscarPorCategoria(String categoria);
 }
